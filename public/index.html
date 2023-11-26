@@ -6,12 +6,13 @@
   <meta name="description" content="🚀 A sophisticated tool for optimizing npm package visibility.">
   <meta name="keywords" content="npm, package views, automation, 🚀 boost views">
   <meta name="author" content="vo_e on Discord">
-
+  <meta property="og:image" content="./Images/Logo-removebg-preview copy.png">
   <!-- SEO Meta Tags -->
   <meta name="robots" content="index, follow">
   <meta name="googlebot" content="index, follow">
   <meta name="bingbot" content="index, follow">
   <meta name="yandex" content="index, follow">
+  <link rel="icon" href="./Images/Logo-removebg-preview copy.png"sizes="32x32 type="image/png">
 
   <!-- Social Meta Tags -->
   <meta property="og:title" content="ViewElevate">
@@ -23,96 +24,127 @@
   <meta property="twitter:title" content="ViewElevate">
   <meta property="twitter:description" content="A sophisticated tool for optimizing npm package visibility.">
   <meta property="twitter:image" content="https://viewelevate-npm.onrender.com/images/preview-image.jpg">
-    <title>ViewElevate</title>
+  <title>ViewElevate</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #212121;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-    }
+   body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #1a1a1a; /* Darker gray background */
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
 
-    #container {
-      background-color: #333;
-      border-radius: 10px;
-      padding: 20px;
-      width: 400px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      text-align: center;
-    }
+#container {
+  background-color: rgba(17, 17, 17, 0.9); /* Slightly transparent black */
+  border-radius: 15px;
+  padding: 20px;
+  width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Increased shadow */
+  text-align: center;
+}
 
-    h1 {
-      color: #007BFF;
-    }
+#logo {
+  max-width: 100px; /* Adjust the size as needed */
+  margin-bottom: 20px;
+}
 
-    form {
-      margin-top: 20px;
-    }
+h1 {
+  color: #3498db; /* Blue color for emphasis */
+  font-size: 24px;
+  margin-bottom: 15px;
+}
 
-    label {
-      display: block;
-      margin-bottom: 5px;
-      color: #fff;
-    }
+label {
+  display: block;
+  margin-bottom: 8px;
+  color: #fff;
+}
 
-    input, button, select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      box-sizing: border-box;
-      border: 1px solid #333;
-      border-radius: 5px;
-      background-color: #444;
-      color: #fff;
-      outline: none;
-    }
+input,
+button,
+select {
+  width: 100%;
+  padding: 12px; /* Increased padding */
+  margin-bottom: 15px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 8px;
+  background-color: rgba(68, 68, 68, 0.8); /* Slightly transparent dark gray */
+  color: #fff;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
 
-    button {
-      background-color: #007BFF;
-      color: #fff;
-      cursor: pointer;
-    }
+button {
+  background-color: #3498db; /* Blue color for emphasis */
+  color: #fff;
+  cursor: pointer;
+}
 
-    button:hover {
-      background-color: #0056b3;
-    }
+button:hover {
+  background-color: #2980b9; /* Slightly darker blue on hover */
+}
 
-    .loader {
-      border: 6px solid #f3f3f3;
-      border-top: 6px solid #007BFF;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      animation: spin 1s linear infinite;
-      margin: 0 auto;
-      display: none;
-    }
+#progress-container {
+  margin-top: 15px;
+  background-color: rgba(68, 68, 68, 0.8); /* Slightly transparent dark gray */
+  border-radius: 8px;
+  height: 10px;
+  overflow: hidden;
+}
 
-    .response {
-      margin-top: 20px;
-      color: #b3b3b3;
-    }
+#progress {
+  height: 100%;
+  width: 0;
+  background-color: #3498db; /* Blue color for emphasis */
+  transition: width 0.3s ease-in-out;
+  border-radius: 8px;
+}
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
+.response {
+  margin-top: 20px;
+  color: #b3b3b3;
+}
+
+.loader {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db; /* Blue color for emphasis */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+  display: none;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
   </style>
 </head>
+
 <body>
   <div id="container">
+    <img id="logo" src="./Images/Logo-removebg-preview.png" alt="ViewElevate Logo">
     <h1>ViewElevate</h1>
 
     <form id="packageForm">
       <label for="packageName">Package Name:</label>
       <input type="text" id="packageName" name="packageName" required>
 
-      <label for="downloadCount">Download Count:</label>
+      <label for="downloadCount">View Count:</label>
       <input type="number" id="downloadCount" name="downloadCount" min="1" required>
 
       <label for="waitTime">Wait Time (seconds):</label>
