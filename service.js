@@ -105,7 +105,7 @@ app.post('/download/:packageName/:count', async (req, res) => {
         cleanupDownloadedFiles(downloadDir, packageName, parseInt(count));
       }, 10000);
   
-      res.json({ message: `🚀 Boosted views for ${packageName}! Successfully simulated ${count} views. Changes can we seen after 24 hours` });
+      res.json({ message: `🚀 Boosted views for ${packageName}! Successfully simulated ${count} views. Changes can be seen after 24 hours` });
     } catch (error) {
       logger.error(`Failed to boost views for ${packageName}: ${error.message}`);
       res.status(500).json({ error: 'Failed to boost views for the package. Please try again.' });
