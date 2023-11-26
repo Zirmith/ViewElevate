@@ -2,7 +2,7 @@
 
 Boost your npm package visibility with ViewElevate – a powerful tool for simulating package views. 🌟
 
-![npm View Bot Logo](url_to_logo.png)
+![Logo](url_to_logo.png)
 
 ## Overview
 
