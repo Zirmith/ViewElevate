@@ -24,9 +24,11 @@
   <meta property="twitter:title" content="ViewElevate">
   <meta property="twitter:description" content="A sophisticated tool for optimizing npm package visibility.">
   <meta property="twitter:image" content="https://viewelevate-npm.onrender.com/images/preview-image.jpg">
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
   <title>ViewElevate</title>
   <style>
-   body {
+body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
@@ -38,6 +40,17 @@
   min-height: 100vh;
 }
 
+#main-container {
+  display: flex;
+}
+
+#sidebar {
+  background-color: #111; /* Dark background for the sidebar */
+  padding: 20px;
+  width: 250px; /* Adjust the width as needed */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Sidebar shadow */
+}
+
 #container {
   background-color: rgba(17, 17, 17, 0.9); /* Slightly transparent black */
   border-radius: 15px;
@@ -45,6 +58,7 @@
   width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Increased shadow */
   text-align: center;
+  margin-left: 20px; /* Adjust the margin as needed */
 }
 
 #logo {
@@ -131,11 +145,13 @@ button:hover {
   }
 }
 
-
   </style>
 </head>
 
 <body>
+
+
+
   <div id="container">
     <img id="logo" src="./Images/Logo-removebg-preview.png" alt="ViewElevate Logo">
     <h1>ViewElevate</h1>
@@ -150,7 +166,7 @@ button:hover {
       <label for="waitTime">Wait Time (seconds):</label>
       <input type="number" id="waitTime" name="waitTime" min="1" value="5" required>
 
-      <button type="button" onclick="downloadPackage()">Start View Bot</button>
+      <button type="button" id="startViewButton" onclick="downloadPackage()">Start View Bot</button>
       <div class="loader" id="loader"></div>
       <div id="progress-container">
         <div class="progress" id="progress"></div>
@@ -161,39 +177,121 @@ button:hover {
   </div>
 
   <script>
-    async function downloadPackage() {
-      const packageName = document.getElementById('packageName').value;
-      const downloadCount = document.getElementById('downloadCount').value;
-      const waitTime = document.getElementById('waitTime').value;
-      const loader = document.getElementById('loader');
-      const progressElement = document.getElementById('progress');
-      const responseElement = document.getElementById('response');
+   async function downloadPackage() {
+  const packageName = document.getElementById('packageName').value;
+  const downloadCount = document.getElementById('downloadCount').value;
+  const waitTime = document.getElementById('waitTime').value;
+  const loader = document.getElementById('loader');
+  const progressElement = document.getElementById('progress');
+  const responseElement = document.getElementById('response');
+  const startViewButton = document.getElementById('startViewButton'); // Add this line
 
-      // Show loader and progress bar
-      loader.style.display = 'block';
-      progressElement.style.width = '0%';
+  responseElement.innerHTML = `Initiating process to send ${downloadCount} views to the package named ${packageName}.`;
 
-      try {
-        // Make a POST request to the server
-        const response = await fetch(`/download/${packageName}/${downloadCount}`, { method: 'POST' });
-        const data = await response.json();
+  // Show loader and progress bar
+  //loader.style.display = 'block';
+  progressElement.style.width = '0%';
 
-        // Simulate asynchronous operation (e.g., waiting for changes on the npm site)
-        await simulateDelay(waitTime * 1000);
+  // Disable the start button
+  startViewButton.disabled = true;
+  startViewButton.style.backgroundColor = 'grey'; // You can customize the gray color
 
-        // Simulate successful response
-        responseElement.innerHTML = `<p>${data.message}</p>`;
-        responseElement.style.color = '#4CAF50'; // Green color for success
-      } catch (error) {
-        console.error(error);
-        responseElement.innerHTML = `<p class="error">An error occurred. Please check the console for details.</p>`;
-        responseElement.style.color = '#FF6347'; // Tomato color for error
-      } finally {
-        // Hide loader and reset progress bar after completion
-        loader.style.display = 'none';
-        progressElement.style.width = '0%';
+  let data = {}; // Initialize data outside the try block
+
+  try {
+    // Make a POST request to the server
+    const response = await fetch(`/download/${packageName}/${downloadCount}`, { method: 'POST' });
+
+    // Clone the response before reading the body
+    const clonedResponse = response.clone();
+
+    // Get the response body as JSON
+    data = await response.json();
+
+    // Set up a readable stream from the cloned response
+    const reader = clonedResponse.body.getReader();
+
+    // Get the total content length from the headers
+    const contentLength = +clonedResponse.headers.get('Content-Length');
+    let receivedLength = 0; // Bytes received
+
+    // Update the progress bar width gradually with a delay
+const updateProgressBarWithDelay = async (currentProgress, targetProgress) => {
+  await simulateProgressIncrease(currentProgress, targetProgress);
+  //await simulateProgressDecrease(targetProgress, currentProgress);
+};
+
+// Function to simulate a gradual increase in progress
+async function simulateProgressIncrease(currentWidth, targetWidth) {
+  const increment = 1; // Increase by 1% at a time
+  while (parseInt(currentWidth) < parseInt(targetWidth)) {
+    currentWidth = `${parseInt(currentWidth) + increment}%`;
+    await sleep(20); // Adjust the delay for smoother animation
+    progressElement.style.width = currentWidth;
+  }
+}
+
+// Function to simulate a delay using Promises
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Function to simulate a gradual decrease in progress
+async function simulateProgressDecrease(currentWidth, targetWidth) {
+  const decrement = 1; // Decrease by 1% at a time
+  while (parseInt(currentWidth) > parseInt(targetWidth)) {
+    currentWidth = `${parseInt(currentWidth) - decrement}%`;
+    await sleep(20); // Adjust the delay for smoother animation
+    progressElement.style.width = currentWidth;
+  }
+}
+
+
+
+    while (true) {
+      const { done, value } = await reader.read();
+
+      if (done) {
+        // Exit the loop when the response has been fully read
+        break;
       }
+
+      receivedLength += value.length;
+
+      // Calculate the progress percentage
+      const progress = (receivedLength / contentLength) * 100;
+      // Update the progress bar width
+       // Update the progress bar width gradually
+  updateProgressBarWithDelay(progressElement.style.width, `${progress}%`);
     }
+
+    // Simulate asynchronous operation (e.g., waiting for changes on the npm site)
+    await simulateDelay(waitTime * 1000);
+
+    // Simulate successful response
+    console.log(data);
+    responseElement.innerHTML = `<p>${data.message}</p>`;
+    responseElement.style.color = '#4CAF50'; // Green color for success
+  } catch (error) {
+    console.error(error);
+    responseElement.innerHTML = `<p class="error">An error occurred. Please check the console for details.</p>`;
+    responseElement.style.color = '#FF6347'; // Tomato color for error
+  } finally {
+    // Hide loader after completion
+    loader.style.display = 'none';
+    // Ensure the progress bar is at 100% even if the content is not fully received
+    //progressElement.style.width = '100%';
+    // Enable and style the start button back
+    startViewButton.disabled = false;
+    startViewButton.style.backgroundColor = '#3498db'; // Blue color (customize as needed)
+    setTimeout(() => {
+      responseElement.innerHTML = '';
+    }, 4000);
+  }
+}
+
+
+
 
     // Function to simulate asynchronous delay
     function simulateDelay(ms) {
