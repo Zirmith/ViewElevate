@@ -68,22 +68,10 @@ app.get('/package-info/:packageName', async (req, res) => {
 });
 
 
-const rateLimit = require('express-rate-limit');
-
-// Apply rate limiting middleware
-const downloadLimiter = rateLimit({
-    windowMs: 24 * 60 * 60 * 1000, // 24 hours window
-    max: 3, // Allow 3 requests per day per HWID
-    keyGenerator: (req) => {
-      // Use the MAC address as the unique key for rate limiting
-      return req.get('User-Agent') + ':' + MAC_ADDRESS;
-    },
-    message: 'Too many requests, please try again later.',
-  });
 
 
 // Apply rate limiting only to the /download endpoint
-app.post('/download/:packageName/:count', downloadLimiter, async (req, res) => {
+app.post('/download/:packageName/:count', async (req, res) => {
     const { packageName, count } = req.params;
   
     try {
