@@ -271,7 +271,7 @@ progressElement.style.display = 'block';
     await simulateDelay(waitTime * 1000);
 
     if(data.message){
-      responseElement.innerHTML = `<p>${data.error}</p>`;
+      responseElement.innerHTML = `<p>${data.message}</p>`;
       responseElement.style.color = '#4CAF50'; // Green color for success
 
     }
