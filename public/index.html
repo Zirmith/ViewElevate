@@ -109,6 +109,7 @@ button:hover {
   border-radius: 8px;
   height: 10px;
   overflow: hidden;
+  display: none;
 }
 
 #progress {
@@ -117,6 +118,7 @@ button:hover {
   background-color: #3498db; /* Blue color for emphasis */
   transition: width 0.3s ease-in-out;
   border-radius: 8px;
+  display: none;
 }
 
 .response {
@@ -185,13 +187,13 @@ button:hover {
   const progressElement = document.getElementById('progress');
   const responseElement = document.getElementById('response');
   const startViewButton = document.getElementById('startViewButton'); // Add this line
-
+const progresscon = document.getElementById('progress-container')
   responseElement.innerHTML = `Initiating process to send ${downloadCount} views to the package named ${packageName}.`;
 
   // Show loader and progress bar
   //loader.style.display = 'block';
   progressElement.style.width = '0%';
-
+  
   // Disable the start button
   startViewButton.disabled = true;
   startViewButton.style.backgroundColor = 'grey'; // You can customize the gray color
@@ -210,7 +212,7 @@ button:hover {
 
     // Set up a readable stream from the cloned response
     const reader = clonedResponse.body.getReader();
-
+    progresscon.style.display = 'block';
     // Get the total content length from the headers
     const contentLength = +clonedResponse.headers.get('Content-Length');
     let receivedLength = 0; // Bytes received
@@ -246,7 +248,7 @@ async function simulateProgressDecrease(currentWidth, targetWidth) {
   }
 }
 
-
+progressElement.style.display = 'block';
 
     while (true) {
       const { done, value } = await reader.read();
@@ -268,10 +270,16 @@ async function simulateProgressDecrease(currentWidth, targetWidth) {
     // Simulate asynchronous operation (e.g., waiting for changes on the npm site)
     await simulateDelay(waitTime * 1000);
 
-    // Simulate successful response
-    console.log(data);
-    responseElement.innerHTML = `<p>${data.message}</p>`;
-    responseElement.style.color = '#4CAF50'; // Green color for success
+    if(data.message){
+      responseElement.innerHTML = `<p>${data.error}</p>`;
+      responseElement.style.color = '#4CAF50'; // Green color for success
+
+    }
+    if(data.error){
+      responseElement.innerHTML = `<p>${data.error}</p>`;
+      responseElement.style.color = '#FF6347'; // Green color for success
+
+    }
   } catch (error) {
     console.error(error);
     responseElement.innerHTML = `<p class="error">An error occurred. Please check the console for details.</p>`;
@@ -286,6 +294,10 @@ async function simulateProgressDecrease(currentWidth, targetWidth) {
     startViewButton.style.backgroundColor = '#3498db'; // Blue color (customize as needed)
     setTimeout(() => {
       responseElement.innerHTML = '';
+      responseElement.style.color = '';
+      progressElement.style.width = '0%';
+      progressElement.style.display = 'none';
+      progresscon.style.display = 'none';
     }, 4000);
   }
 }
