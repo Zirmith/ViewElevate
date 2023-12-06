@@ -6,24 +6,24 @@
   <meta name="description" content="🚀 A sophisticated tool for optimizing npm package visibility.">
   <meta name="keywords" content="npm, package views, automation, 🚀 boost views">
   <meta name="author" content="vo_e on Discord">
-  <meta property="og:image" content="https://viewelevate-npm.onrender.com/images/Logo-removebg-previewcopy.png">
+  <meta property="og:image" content="./Images/Logo-removebg-previewcopy.png">
   <!-- SEO Meta Tags -->
   <meta name="robots" content="index, follow">
   <meta name="googlebot" content="index, follow">
   <meta name="bingbot" content="index, follow">
   <meta name="yandex" content="index, follow">
-  <link rel="icon" href="https://viewelevate-npm.onrender.com/images/Logo-removebg-previewcopy.png"sizes="32x32 type="image/png">
+  <link rel="icon" href="./Images/Logo-removebg-previewcopy.png"sizes="32x32 type="image/png">
 
   <!-- Social Meta Tags -->
   <meta property="og:title" content="ViewElevate">
   <meta property="og:description" content="🚀 A sophisticated tool for optimizing npm package visibility.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://viewelevate-npm.onrender.com">
-  <meta property="og:image" content="https://viewelevate-npm.onrender.com/images/Logo-removebg-previewcopy.png">
+  <meta property="og:image" content="./Images/Logo-removebg-previewcopy.png">
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:title" content="ViewElevate">
   <meta property="twitter:description" content="A sophisticated tool for optimizing npm package visibility.">
-  <meta property="twitter:image" content="https://viewelevate-npm.onrender.com/images/Logo-removebg-previewcopy.png">
+  <meta property="twitter:image" content="./Images/Logo-removebg-previewcopy.png">
   <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
   <title>ViewElevate</title>
@@ -192,7 +192,7 @@ const progresscon = document.getElementById('progress-container')
 
   // Show loader and progress bar
   loader.style.display = 'block';
-  progressElement.style.width = '0%';
+ // progressElement.style.width = '0%';
   
   // Disable the start button
   startViewButton.disabled = true;
@@ -212,7 +212,7 @@ const progresscon = document.getElementById('progress-container')
 
     // Set up a readable stream from the cloned response
     const reader = clonedResponse.body.getReader();
-    progresscon.style.display = 'block';
+   // progresscon.style.display = 'block';
     // Get the total content length from the headers
     const contentLength = +clonedResponse.headers.get('Content-Length');
     let receivedLength = 0; // Bytes received
@@ -294,11 +294,11 @@ async function simulateProgressDecrease(currentWidth, targetWidth) {
     setTimeout(() => {
       responseElement.innerHTML = '';
       responseElement.style.color = '';
-      progressElement.style.width = '0%';
+      //progressElement.style.width = '0%';
       //progressElement.style.display = 'none';
       loader.style.display = 'none';
 
-      progresscon.style.display = 'none';
+      //progresscon.style.display = 'none';
       startViewButton.disabled = false;
       startViewButton.style.backgroundColor = '#3498db'; // Blue color (customize as needed)
     
