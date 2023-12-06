@@ -191,7 +191,7 @@ const progresscon = document.getElementById('progress-container')
   responseElement.innerHTML = `Initiating process to send ${downloadCount} views to the package named ${packageName}.`;
 
   // Show loader and progress bar
-  //loader.style.display = 'block';
+  loader.style.display = 'block';
   progressElement.style.width = '0%';
   
   // Disable the start button
@@ -248,7 +248,7 @@ async function simulateProgressDecrease(currentWidth, targetWidth) {
   }
 }
 
-progressElement.style.display = 'block';
+//progressElement.style.display = 'block';
 
     while (true) {
       const { done, value } = await reader.read();
@@ -295,7 +295,9 @@ progressElement.style.display = 'block';
       responseElement.innerHTML = '';
       responseElement.style.color = '';
       progressElement.style.width = '0%';
-      progressElement.style.display = 'none';
+      //progressElement.style.display = 'none';
+      loader.style.display = 'none';
+
       progresscon.style.display = 'none';
       startViewButton.disabled = false;
       startViewButton.style.backgroundColor = '#3498db'; // Blue color (customize as needed)
