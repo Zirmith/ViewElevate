@@ -290,15 +290,18 @@ progressElement.style.display = 'block';
     // Ensure the progress bar is at 100% even if the content is not fully received
     //progressElement.style.width = '100%';
     // Enable and style the start button back
-    startViewButton.disabled = false;
-    startViewButton.style.backgroundColor = '#3498db'; // Blue color (customize as needed)
+   
     setTimeout(() => {
       responseElement.innerHTML = '';
       responseElement.style.color = '';
       progressElement.style.width = '0%';
       progressElement.style.display = 'none';
       progresscon.style.display = 'none';
-    }, 4000);
+      startViewButton.disabled = false;
+      startViewButton.style.backgroundColor = '#3498db'; // Blue color (customize as needed)
+    
+
+    }, 8000);
   }
 }
 

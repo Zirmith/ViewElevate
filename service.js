@@ -45,7 +45,7 @@ const logger = winston.createLogger({
 });
 
 // Use Morgan for HTTP request logging
-app.use(morgan('combined', { stream: { write: (message) => logger.info(message) } }));
+app.use(morgan('dev', { stream: { write: (message) => logger.info(message) } }));
 
 
 // Serve static files from the public folder
@@ -88,7 +88,7 @@ app.post('/download/:packageName/:count', async (req, res) => {
     }
 
     // Get MAC address dynamically for each request
-    const dynamicMACAddress = getmac.default();
+    //const dynamicMACAddress = getmac.default();
 
     // Retrieve package information
     const infoResponse = await axios.get(`https://registry.npmjs.org/${packageName}`);
@@ -111,7 +111,7 @@ app.post('/download/:packageName/:count', async (req, res) => {
   } catch (error) {
     logger.error(`Failed to boost views for ${packageName}: ${error.message}`);
     console.log(error)
-    res.status(500).json({ error: 'Failed to boost views for the package. Please try again.' });
+    res.status(500).json({ error: `Failed to boost views for the package: ${packageName} Reason: ${error.message}` });
   }
 });
 
@@ -245,6 +245,32 @@ async function downloadPackageStream(packageInfo, downloadDir, packageName, coun
     const parsedCount = parseInt(count, 10);
     return !isNaN(parsedCount) && parsedCount > 0;
   }
+
+
+
+  // Middleware to log additional information in colored JSON format
+app.use((req, res, next) => {
+    const logInfo = {
+      timestamp: new Date().toISOString(),
+      method: req.method,
+      url: req.url,
+      body: req.body,
+      headers: req.headers,
+    };
+    console.log('\x1b[34m%s\x1b[0m', 'Request Log:', JSON.stringify(logInfo, null, 2));
+    next();
+  });
+
+// Endpoint to get logs
+app.get('/logs', (req, res) => {
+  fs.readFile(path.join(__dirname, 'combined.log'), 'utf8', (err, data) => {
+    if (err) {
+      console.error('\x1b[31m%s\x1b[0m', 'Error reading access log:', err.message);
+      return res.status(500).json({ error: 'Internal Server Error' });
+    }
+    res.send(data);
+  });
+});
 
 // Endpoint to handle file uploads
 app.post('/upload', upload.single('file'), (req, res) => {
