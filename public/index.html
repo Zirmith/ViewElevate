@@ -2,318 +2,303 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="🚀 A sophisticated tool for optimizing npm package visibility.">
-  <meta name="keywords" content="npm, package views, automation, 🚀 boost views">
-  <meta name="author" content="vo_e on Discord">
-  <meta property="og:image" content="./Images/Logo-removebg-previewcopy.png">
-  <!-- SEO Meta Tags -->
-  <meta name="robots" content="index, follow">
-  <meta name="googlebot" content="index, follow">
-  <meta name="bingbot" content="index, follow">
-  <meta name="yandex" content="index, follow">
-  <link rel="icon" href="./Images/Logo-removebg-previewcopy.png"sizes="32x32 type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="🚀 A sophisticated tool for optimizing npm package visibility.">
+    <meta name="keywords" content="npm, package views, automation, 🚀 boost views">
+    <meta name="author" content="vo_e on Discord">
+    <meta property="og:image" content="./Images/Logo-removebg-previewcopy.png">
+    <title>ViewElevate Dashboard</title>
+    <link rel="icon" href="./Images/Logo-removebg-previewcopy.png" sizes="32x32" type="image/png">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
 
-  <!-- Social Meta Tags -->
-  <meta property="og:title" content="ViewElevate">
-  <meta property="og:description" content="🚀 A sophisticated tool for optimizing npm package visibility.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://viewelevate-npm.onrender.com">
-  <meta property="og:image" content="./Images/Logo-removebg-previewcopy.png">
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:title" content="ViewElevate">
-  <meta property="twitter:description" content="A sophisticated tool for optimizing npm package visibility.">
-  <meta property="twitter:image" content="./Images/Logo-removebg-previewcopy.png">
-  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+        body {
+            display: flex;
+            height: 100vh;
+            background: #121212;
+            color: #ffffff;
+        }
 
-  <title>ViewElevate</title>
-  <style>
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #1a1a1a; /* Darker gray background */
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-}
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background: #1e1e1e;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-right: 1px solid #27272a;
+        }
 
-#main-container {
-  display: flex;
-}
+        .sidebar img {
+            width: 100px;
+            margin-bottom: 20px;
+        }
 
-#sidebar {
-  background-color: #111; /* Dark background for the sidebar */
-  padding: 20px;
-  width: 250px; /* Adjust the width as needed */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Sidebar shadow */
-}
+        .sidebar h1 {
+            color: #00bcd4;
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
 
-#container {
-  background-color: rgba(17, 17, 17, 0.9); /* Slightly transparent black */
-  border-radius: 15px;
-  padding: 20px;
-  width: 400px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Increased shadow */
-  text-align: center;
-  margin-left: 20px; /* Adjust the margin as needed */
-}
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
 
-#logo {
-  max-width: 100px; /* Adjust the size as needed */
-  margin-bottom: 20px;
-}
+        .nav-links a {
+            padding: 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            text-align: center;
+            color: #ffffff;
+            text-decoration: none;
+            background: #2a2a2a;
+            transition: background 0.3s ease;
+        }
 
-h1 {
-  color: #3498db; /* Blue color for emphasis */
-  font-size: 24px;
-  margin-bottom: 15px;
-}
+        .nav-links a:hover {
+            background: #333;
+        }
 
-label {
-  display: block;
-  margin-bottom: 8px;
-  color: #fff;
-}
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            overflow-y: auto;
+        }
 
-input,
-button,
-select {
-  width: 100%;
-  padding: 12px; /* Increased padding */
-  margin-bottom: 15px;
-  box-sizing: border-box;
-  border: none;
-  border-radius: 8px;
-  background-color: rgba(68, 68, 68, 0.8); /* Slightly transparent dark gray */
-  color: #fff;
-  outline: none;
-  transition: background-color 0.3s ease;
-}
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-button {
-  background-color: #3498db; /* Blue color for emphasis */
-  color: #fff;
-  cursor: pointer;
-}
+        .header h2 {
+            color: #00bcd4;
+            font-size: 1.75rem;
+        }
 
-button:hover {
-  background-color: #2980b9; /* Slightly darker blue on hover */
-}
+        .header .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-#progress-container {
-  margin-top: 15px;
-  background-color: rgba(68, 68, 68, 0.8); /* Slightly transparent dark gray */
-  border-radius: 8px;
-  height: 10px;
-  overflow: hidden;
-  display: none;
-}
+        .header .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #00bcd4;
+        }
 
-#progress {
-  height: 100%;
-  width: 0;
-  background-color: #3498db; /* Blue color for emphasis */
-  transition: width 0.3s ease-in-out;
-  border-radius: 8px;
-  display: none;
-}
+        .header .user-profile span {
+            font-size: 1rem;
+            color: #9e9e9e;
+        }
 
-.response {
-  margin-top: 20px;
-  color: #b3b3b3;
-}
+        /* Form and Container Styles */
+        .container {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
 
-.loader {
-  border: 6px solid #f3f3f3;
-  border-top: 6px solid #3498db; /* Blue color for emphasis */
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  animation: spin 1s linear infinite;
-  margin: 0 auto;
-  display: none;
-}
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
+        label {
+            font-size: 0.9rem;
+            color: #9e9e9e;
+        }
 
-  100% {
-    transform: rotate(360deg);
-  }
-}
+        input {
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #2a2a2a;
+            color: #ffffff;
+            font-size: 1rem;
+            outline: none;
+            transition: background 0.3s ease;
+        }
 
-  </style>
+        input:focus {
+            background: #333;
+        }
+
+        button {
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(45deg, #00bcd4, #4caf50);
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background: linear-gradient(45deg, #4caf50, #00bcd4);
+            transform: scale(1.05);
+        }
+
+        button:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+
+        .loader {
+            border: 5px solid #2a2a2a;
+            border-top: 5px solid #00bcd4;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            display: none;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #progress-container {
+            height: 10px;
+            width: 100%;
+            background: #333;
+            border-radius: 5px;
+            overflow: hidden;
+            display: none;
+            margin-top: 15px;
+        }
+
+        #progress {
+            width: 0;
+            height: 100%;
+            background: linear-gradient(45deg, #00bcd4, #4caf50);
+            transition: width 0.3s ease;
+        }
+
+        .response {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #76ff03;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .response.show {
+            opacity: 1;
+        }
+    </style>
 </head>
-
 <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <img src="./Images/Logo-removebg-preview.png" alt="ViewElevate Logo">
+        <h1>ViewElevate</h1>
+        <div class="nav-links">
+            <a href="#">Dashboard</a>
+            <a href="#">View Bot</a>
+            <a href="#">Statistics</a>
+            <a href="#">Settings</a>
+            <a href="#">Support</a>
+        </div>
+    </div>
 
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <h2>Dashboard</h2>
+            <div class="user-profile">
+                <img src="./Images/user-placeholder.png" alt="User Profile">
+                <span>Welcome, User</span>
+            </div>
+        </div>
 
+        <!-- Content Container -->
+        <div class="container">
+            <form id="packageForm">
+                <label for="packageName">Package Name:</label>
+                <input type="text" id="packageName" name="packageName" placeholder="Enter package name" required>
 
-  <div id="container">
-    <img id="logo" src="./Images/Logo-removebg-preview.png" alt="ViewElevate Logo">
-    <h1>ViewElevate</h1>
+                <label for="downloadCount">View Count:</label>
+                <input type="number" id="downloadCount" name="downloadCount" placeholder="Number of views" min="1" required>
 
-    <form id="packageForm">
-      <label for="packageName">Package Name:</label>
-      <input type="text" id="packageName" name="packageName" required>
+                <label for="waitTime">Wait Time (seconds):</label>
+                <input type="number" id="waitTime" name="waitTime" placeholder="Wait time" min="1" value="5" required>
 
-      <label for="downloadCount">View Count:</label>
-      <input type="number" id="downloadCount" name="downloadCount" min="1" required>
+                <button type="button" id="startViewButton" onclick="downloadPackage()">Start View Bot</button>
+            </form>
 
-      <label for="waitTime">Wait Time (seconds):</label>
-      <input type="number" id="waitTime" name="waitTime" min="1" value="5" required>
+            <div class="loader" id="loader"></div>
+            <div id="progress-container">
+                <div id="progress"></div>
+            </div>
+            <div id="response" class="response"></div>
+        </div>
+    </div>
 
-      <button type="button" id="startViewButton" onclick="downloadPackage()">Start View Bot</button>
-      <div class="loader" id="loader"></div>
-      <div id="progress-container">
-        <div class="progress" id="progress"></div>
-      </div>
-    </form>
+    <script>
+        async function downloadPackage() {
+            const packageName = document.getElementById('packageName').value;
+            const downloadCount = document.getElementById('downloadCount').value;
+            const waitTime = document.getElementById('waitTime').value;
+            const loader = document.getElementById('loader');
+            const progressElement = document.getElementById('progress');
+            const responseElement = document.getElementById('response');
+            const startViewButton = document.getElementById('startViewButton');
+            const progressContainer = document.getElementById('progress-container');
 
-    <div id="response" class="response"></div>
-  </div>
+            responseElement.classList.remove('show');
+            loader.style.display = 'block';
+            startViewButton.disabled = true;
 
-  <script>
-   async function downloadPackage() {
-  const packageName = document.getElementById('packageName').value;
-  const downloadCount = document.getElementById('downloadCount').value;
-  const waitTime = document.getElementById('waitTime').value;
-  const loader = document.getElementById('loader');
-  const progressElement = document.getElementById('progress');
-  const responseElement = document.getElementById('response');
-  const startViewButton = document.getElementById('startViewButton'); // Add this line
-const progresscon = document.getElementById('progress-container')
-  responseElement.innerHTML = `Initiating process to send ${downloadCount} views to the package named ${packageName}.`;
+            try {
+                const response = await fetch(`/download/${packageName}/${downloadCount}`, { method: 'POST' });
+                const data = await response.json();
+                const reader = response.body.getReader();
+                const contentLength = +response.headers.get('Content-Length');
+                let receivedLength = 0;
 
-  // Show loader and progress bar
-  loader.style.display = 'block';
- // progressElement.style.width = '0%';
-  
-  // Disable the start button
-  startViewButton.disabled = true;
-  startViewButton.style.backgroundColor = 'grey'; // You can customize the gray color
+                progressContainer.style.display = 'block';
 
-  let data = {}; // Initialize data outside the try block
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    receivedLength += value.length;
+                    progressElement.style.width = `${(receivedLength / contentLength) * 100}%`;
+                }
 
-  try {
-    // Make a POST request to the server
-    const response = await fetch(`/download/${packageName}/${downloadCount}`, { method: 'POST' });
-
-    // Clone the response before reading the body
-    const clonedResponse = response.clone();
-
-    // Get the response body as JSON
-    data = await response.json();
-
-    // Set up a readable stream from the cloned response
-    const reader = clonedResponse.body.getReader();
-   // progresscon.style.display = 'block';
-    // Get the total content length from the headers
-    const contentLength = +clonedResponse.headers.get('Content-Length');
-    let receivedLength = 0; // Bytes received
-
-    // Update the progress bar width gradually with a delay
-const updateProgressBarWithDelay = async (currentProgress, targetProgress) => {
-  await simulateProgressIncrease(currentProgress, targetProgress);
-  //await simulateProgressDecrease(targetProgress, currentProgress);
-};
-
-// Function to simulate a gradual increase in progress
-async function simulateProgressIncrease(currentWidth, targetWidth) {
-  const increment = 1; // Increase by 1% at a time
-  while (parseInt(currentWidth) < parseInt(targetWidth)) {
-    currentWidth = `${parseInt(currentWidth) + increment}%`;
-    await sleep(20); // Adjust the delay for smoother animation
-    progressElement.style.width = currentWidth;
-  }
-}
-
-// Function to simulate a delay using Promises
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-// Function to simulate a gradual decrease in progress
-async function simulateProgressDecrease(currentWidth, targetWidth) {
-  const decrement = 1; // Decrease by 1% at a time
-  while (parseInt(currentWidth) > parseInt(targetWidth)) {
-    currentWidth = `${parseInt(currentWidth) - decrement}%`;
-    await sleep(20); // Adjust the delay for smoother animation
-    progressElement.style.width = currentWidth;
-  }
-}
-
-//progressElement.style.display = 'block';
-
-    while (true) {
-      const { done, value } = await reader.read();
-
-      if (done) {
-        // Exit the loop when the response has been fully read
-        break;
-      }
-
-      receivedLength += value.length;
-
-      // Calculate the progress percentage
-      const progress = (receivedLength / contentLength) * 100;
-      // Update the progress bar width
-       // Update the progress bar width gradually
-  updateProgressBarWithDelay(progressElement.style.width, `${progress}%`);
-    }
-
-    // Simulate asynchronous operation (e.g., waiting for changes on the npm site)
-    await simulateDelay(waitTime * 1000);
-
-    if(data.message){
-      responseElement.innerHTML = `<p>${data.message}</p>`;
-      responseElement.style.color = '#4CAF50'; // Green color for success
-
-    }
-    if(data.error){
-      responseElement.innerHTML = `<p>${data.error}</p>`;
-      responseElement.style.color = '#FF6347'; // Green color for success
-
-    }
-  } catch (error) {
-    console.error(error);
-    responseElement.innerHTML = `<p class="error">An error occurred. Please check the console for details.</p>`;
-    responseElement.style.color = '#FF6347'; // Tomato color for error
-  } finally {
-    // Hide loader after completion
-    loader.style.display = 'none';
-    // Ensure the progress bar is at 100% even if the content is not fully received
-    //progressElement.style.width = '100%';
-    // Enable and style the start button back
-   
-    setTimeout(() => {
-      responseElement.innerHTML = '';
-      responseElement.style.color = '';
-      //progressElement.style.width = '0%';
-      //progressElement.style.display = 'none';
-      loader.style.display = 'none';
-
-      //progresscon.style.display = 'none';
-      startViewButton.disabled = false;
-      startViewButton.style.backgroundColor = '#3498db'; // Blue color (customize as needed)
-    
-
-    }, 8000);
-  }
-}
-
-
-
-
-    // Function to simulate asynchronous delay
-    function simulateDelay(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-  </script>
+                responseElement.textContent = data.message || 'Views successfully generated!';
+                responseElement.classList.add('show');
+            } catch (error) {
+                responseElement.textContent = 'Error generating views. Please try again.';
+                responseElement.classList.add('show');
+            } finally {
+                loader.style.display = 'none';
+                startViewButton.disabled = false;
+                progressContainer.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
