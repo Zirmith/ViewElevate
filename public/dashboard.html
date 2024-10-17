@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="🚀 A sophisticated tool for optimizing npm package visibility.">
+    <meta name="keywords" content="npm, package views, automation, 🚀 boost views">
+    <meta name="author" content="vo_e on Discord">
+    <meta property="og:image" content="./Images/Logo-removebg-previewcopy.png">
+    <title>ViewElevate Dashboard</title>
+    <link rel="icon" href="./Images/Icon.png" sizes="32x32" type="image/png">
+    <style>
+        :root {
+            --color-bg: #f0f4f8; /* Light background */
+            --color-container-bg: rgba(255, 255, 255, 0.9); /* Glossy white */
+            --color-border: #e0e0e0; /* Light border */
+            --color-text: #333; /* Dark text */
+            --color-primary: #0078b0; /* Primary color */
+            --color-hover: #0092e0; /* Hover color */
+            --color-dark-bg: #2c2c2c; /* Dark mode background */
+            --color-dark-text: #e0e0e0; /* Dark mode text */
+            --font-family: 'Inter', sans-serif; /* Clean sans-serif font */
+            --transition: 0.3s; /* General transition speed */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family);
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            background: var(--color-bg);
+            color: var(--color-text);
+            overflow: hidden; /* Prevent scroll bars */
+            transition: background var(--transition), color var(--transition);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 240px;
+            background: white;
+            border-right: 2px solid var(--color-border);
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+            transition: width var(--transition);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            text-align: center;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: var(--color-text);
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: background var(--transition);
+        }
+
+        .sidebar a:hover {
+            background: var(--color-primary);
+            color: white; /* White text on hover */
+        }
+
+        /* Main Content Area */
+        .main-content {
+            margin-left: 240px; /* Adjust for sidebar */
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            overflow-y: auto;
+            transition: margin-left var(--transition);
+        }
+
+        /* Container Styles */
+        .container {
+            background: var(--color-container-bg); /* Glossy white background */
+            padding: 30px; /* Increased padding */
+            border-radius: 15px; /* More rounded corners */
+            border: 1px solid var(--color-border);
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(15px); /* Blur effect */
+            transition: transform var(--transition);
+        }
+
+        .container:hover {
+            transform: scale(1.02); /* Scale up on hover */
+        }
+
+        /* Form Styles */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Increased gap */
+        }
+
+        label {
+            color: var(--color-primary);
+            font-weight: bold; /* Bold labels */
+            font-size: 1.1rem; /* Increased font size */
+        }
+
+        input {
+            padding: 14px; /* Slightly larger padding */
+            border: 1px solid var(--color-border);
+            border-radius: 10px; /* More rounded corners */
+            background: #ffffff; /* White background */
+            color: var(--color-text);
+            font-size: 1rem;
+            outline: none;
+            transition: background var(--transition), border-color var(--transition);
+        }
+
+        input:focus {
+            background: #f9f9f9; /* Lighter background */
+            border-color: var(--color-primary); /* Highlight border */
+        }
+
+        button {
+            padding: 14px; /* Increased padding */
+            border: none;
+            border-radius: 10px; /* More rounded corners */
+            background: var(--color-primary);
+            color: white; /* White text */
+            font-size: 1.1rem; /* Increased font size */
+            font-weight: 600;
+            cursor: pointer;
+            transition: background var(--transition), transform var(--transition);
+        }
+
+        button:hover {
+            background: var(--color-hover);
+            transform: scale(1.05); /* Slightly increase size */
+        }
+
+        button:disabled {
+            background: #ccc; /* Greyed out background */
+            cursor: not-allowed;
+        }
+
+        /* Loader Styles */
+        .loader {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9); /* Lighter background */
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            backdrop-filter: blur(10px); /* Blur effect */
+        }
+
+        .loader.active {
+            display: flex;
+        }
+
+        .loader-dot {
+            width: 12px;
+            height: 12px;
+            margin: 0 3px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            animation: loader 1s infinite alternate;
+        }
+
+        @keyframes loader {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.5); }
+        }
+
+        /* Progress Styles */
+        #progress-container {
+            background: var(--color-border);
+            border-radius: 10px; /* More rounded corners */
+            overflow: hidden;
+            height: 10px;
+            margin: 10px 0;
+            display: none;
+        }
+
+        #progress {
+            background: var(--color-primary);
+            height: 100%;
+            width: 0;
+            transition: width var(--transition);
+        }
+
+        /* Response Styles */
+        .response {
+            margin-top: 10px;
+            display: none;
+            color: var(--color-primary); /* Response message color */
+            font-weight: bold; /* Make response text bold */
+        }
+
+        .response.show {
+            display: block;
+        }
+
+        /* Dark Mode Styles */
+        body.dark {
+            background: var(--color-dark-bg);
+            color: var(--color-dark-text);
+        }
+
+        .sidebar.dark {
+            background: var(--color-dark-bg);
+        }
+
+        .sidebar a.dark {
+            color: var(--color-dark-text);
+        }
+
+        .container.dark {
+            background: rgba(50, 50, 50, 0.9);
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <h2>ViewElevate</h2>
+        <a href="/">Dashboard</a>
+        <a href="/global-logs">Global Logs</a>
+        <a href="/support">Support</a>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="container">
+            <form id="packageForm">
+                <label for="packageName">Package Name:</label>
+                <input type="text" id="packageName" name="packageName" placeholder="Enter package name" required>
+
+                <label for="downloadCount">View Count:</label>
+                <input type="number" id="downloadCount" name="downloadCount" placeholder="Number of views" min="1" required>
+
+                <label for="waitTime">Wait Time (seconds):</label>
+                <input type="number" id="waitTime" name="waitTime" placeholder="Wait time in seconds" min="1" required>
+
+                <button type="button" id="startViewButton" onclick="downloadPackage()">Boost Package</button>
+            </form>
+            <div id="progress-container">
+                <div id="progress"></div>
+            </div>
+            <div class="loader" id="loader">
+                <div class="loader-dot"></div>
+                <div class="loader-dot"></div>
+                <div class="loader-dot"></div>
+            </div>
+            <div class="response" id="response"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
